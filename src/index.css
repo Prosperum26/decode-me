@@ -104,15 +104,17 @@ h1 { max-width: 700px; margin: 1.25rem 0 .75rem; color: var(--text-primary); fon
 .round-dot.failed { border-color: var(--deep-red); background: var(--deep-red); }
 .progress-line { display: block; width: clamp(3rem, 9vw, 7rem); height: 1px; margin: 0 .7rem; background: var(--border); }
 .progress-line.completed { background: var(--coral-red); }
-.session-screen { max-width: 42rem; padding-top: clamp(3rem, 12vw, 8rem); }
+.session-screen { max-width: 42rem; padding-top: clamp(3rem, 12vw, 8rem); animation: session-screen-in .65s ease-out both; }
 .session-screen h1 { margin-top: 1rem; font-size: clamp(2.8rem, 7vw, 6rem); }
 .session-screen > p:not(.eyebrow) { max-width: 32rem; margin-top: 1.5rem; color: var(--text-secondary); font-size: 1.1rem; line-height: 1.6; }
 .completion-quote { color: var(--golden-orange) !important; font-family: Georgia, 'Times New Roman', serif; font-size: 1.35rem !important; }
 .completion-passage { max-width: 42rem !important; font-family: Georgia, 'Times New Roman', serif; }
+@keyframes session-screen-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (prefers-reduced-motion: reduce) {
   .home-page::before { animation: none; }
   .first-click-hint { animation: none; }
+  .session-screen { animation: none; }
 }
 
 @media (max-width: 640px) {

@@ -21,10 +21,19 @@ const ROUND_CONFIG: RoundConfig[] = [
 ]
 
 const COMPLETION_QUOTES = [
-  'Not bad. Perhaps the language was never that mysterious.',
-  'Three rounds. You may officially call yourself suspiciously clever.',
-  'Apparently, ancient languages are no match for you.',
-  'The glyphs have been decoded. Your ego may now grow accordingly.',
+  'Not bad. You might actually be onto something.',
+  'Well, well. Someone can read.',
+  'Impressive. We will pretend that was difficult.',
+  'Look at you, decoding ancient nonsense.',
+  'Okay, genius. You got this one.',
+]
+
+const FAILURE_QUOTES = [
+  'The language remains unimpressed.',
+  'Close enough. Unfortunately, not close enough.',
+  'That went... beautifully wrong.',
+  'The glyphs would like another attempt.',
+  'Perhaps the ancient language won this round.',
 ]
 
 function getWordAtIndex(puzzle: Puzzle, index: number): PuzzleWord | undefined {
@@ -220,11 +229,13 @@ type FailureScreenProps = {
 }
 
 function FailureScreen({ onTryAgain }: FailureScreenProps) {
+  const [quote] = useState(() => FAILURE_QUOTES[Math.floor(Math.random() * FAILURE_QUOTES.length)])
+
   return (
     <div className="session-screen failure-screen">
-      <p className="eyebrow">The trail grows quiet</p>
-      <h1>The language remains unsolved.</h1>
-      <p>Perhaps the glyphs were a little smarter this time.</p>
+      <p className="eyebrow">A small interruption</p>
+      <h1>Not quite.</h1>
+      <p>{quote}</p>
       <button className="next-button" type="button" onClick={onTryAgain}>Try again</button>
     </div>
   )
@@ -240,7 +251,7 @@ function CompletionScreen({ quote, plaintext, onReturnHome }: CompletionScreenPr
   return (
     <div className="session-screen completion-screen">
       <p className="eyebrow">The language is open</p>
-      <h1>Congratulations.</h1>
+      <h1>Congratulations</h1>
       <p className="completion-quote">“{quote}”</p>
       <p className="completion-passage">{plaintext}</p>
       <button className="next-button" type="button" onClick={onReturnHome}>Back to home</button>
