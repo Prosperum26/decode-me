@@ -17,7 +17,7 @@ type RoundConfig = {
 const ROUND_CONFIG: RoundConfig[] = [
   { round: 1, attempts: 5, difficulty: 'easy' },
   { round: 2, attempts: 3, difficulty: 'medium' },
-  { round: 3, attempts: 1, difficulty: 'hard' },
+  { round: 3, attempts: 2, difficulty: 'hard' },
 ]
 
 const COMPLETION_QUOTES = [
