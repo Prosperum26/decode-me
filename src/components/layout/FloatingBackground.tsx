@@ -1,3 +1,5 @@
+import { CursorTrail } from '../ui/CursorTrail'
+
 const orbs = [
   { className: 'orb orb-one', color: 'var(--deep-red)' },
   { className: 'orb orb-two', color: 'var(--coral-red)' },
@@ -11,6 +13,7 @@ export function FloatingBackground() {
       {orbs.map((orb) => (
         <span className={orb.className} key={orb.className} style={{ backgroundColor: orb.color }} />
       ))}
+      <CursorTrail />
     </div>
   )
 }

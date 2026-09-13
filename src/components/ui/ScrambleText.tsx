@@ -1,13 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const CHARS = '!<>-_/[]{}=+*^?#'
-const FINAL_TEXT = 'DECODE ME'
 
-export function ScrambleText() {
-  const [display, setDisplay] = useState(FINAL_TEXT)
+type ScrambleTextProps = {
+  text?: string
+}
+
+export function ScrambleText({ text = 'DECODE ME' }: ScrambleTextProps) {
+  const [display, setDisplay] = useState(text)
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null)
 
-  const play = () => {
+  const play = useCallback(() => {
     if (intervalRef.current) clearInterval(intervalRef.current)
 
     let frame = 0
@@ -16,7 +19,7 @@ export function ScrambleText() {
     intervalRef.current = setInterval(() => {
       frame += 1
       setDisplay(
-        FINAL_TEXT.split('')
+        text.split('')
           .map((character, index) => {
             if (character === ' ') return ' '
 
@@ -28,23 +31,23 @@ export function ScrambleText() {
           .join(''),
       )
 
-      if (frame > total + FINAL_TEXT.length && intervalRef.current) {
+      if (frame > total + text.length && intervalRef.current) {
         clearInterval(intervalRef.current)
         intervalRef.current = null
-        setDisplay(FINAL_TEXT)
+        setDisplay(text)
       }
     }, 35)
-  }
+  }, [text])
 
   useEffect(() => {
     play()
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [])
+  }, [play])
 
   return (
-    <span className="scramble" onMouseEnter={play} aria-label={FINAL_TEXT}>
+    <span className="scramble" onMouseEnter={play} aria-label={text}>
       {display}
     </span>
   )

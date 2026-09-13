@@ -1,5 +1,4 @@
-// Temporary canonical glyph pool. This is not the final cipher mapping.
-// Puzzle creation shuffles this pool to generate the actual cipher alphabet.
+// Temporary canonical glyph pool used by the shared fixed cipher mapping.
 export const GLYPH_POOL = [
   '┐', '◇', '∩', '├', '○', '┤', '⌁', '╋', '◊', '∪', '└', '⌞', '⊙',
   '⌂', '⌒', '╳', '◬', '⊕', '⋔', '⌗', '⌄', '⋈', '⧫', '⨯', '⊗', '◩',
