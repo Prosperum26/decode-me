@@ -233,7 +233,6 @@ function FailureScreen({ onTryAgain }: FailureScreenProps) {
 
   return (
     <div className="session-screen failure-screen">
-      <p className="eyebrow">A small interruption</p>
       <h1>Not quite.</h1>
       <p>{quote}</p>
       <button className="next-button" type="button" onClick={onTryAgain}>Try again</button>
