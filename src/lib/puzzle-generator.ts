@@ -6,10 +6,18 @@ export type Puzzle = {
   plaintext: string
   target: string
   encoded: string
+  words: PuzzleWord[]
   targetRange: {
     start: number
     end: number
   }
+}
+
+export type PuzzleWord = {
+  word: string
+  normalizedWord: string
+  encodedStart: number
+  encodedEnd: number
 }
 
 const STOP_WORDS = new Set([
@@ -22,6 +30,7 @@ const STOP_WORDS = new Set([
 const WORD_PATTERN = /[A-Za-z]+/g
 
 type WordToken = {
+  word: string
   normalized: string
   encodedStart: number
 }
@@ -33,7 +42,7 @@ function getWordTokens(text: string): WordToken[] {
 
   while (match !== null) {
     const normalized = match[0].toUpperCase()
-    tokens.push({ normalized, encodedStart })
+    tokens.push({ word: match[0], normalized, encodedStart })
     encodedStart += normalized.length
     match = WORD_PATTERN.exec(text)
   }
@@ -104,11 +113,29 @@ function validatePassage(passage: Passage, mapping: CipherMapping): string[] {
   return candidates
 }
 
+function createPuzzleWords(text: string, encoded: string): PuzzleWord[] {
+  return getWordTokens(text).map((token) => {
+    const encodedEnd = token.encodedStart + token.normalized.length
+
+    if (encoded.slice(token.encodedStart, encodedEnd).length !== token.normalized.length) {
+      throw new Error(`Word "${token.word}" has an invalid encoded range.`)
+    }
+
+    return {
+      word: token.word,
+      normalizedWord: token.normalized,
+      encodedStart: token.encodedStart,
+      encodedEnd,
+    }
+  })
+}
+
 export function generatePuzzle(mapping: CipherMapping = FIXED_CIPHER_MAPPING): Puzzle {
   const passage = passages[Math.floor(Math.random() * passages.length)]
   const candidates = validatePassage(passage, mapping)
   const target = candidates[Math.floor(Math.random() * candidates.length)]
   const encoded = encodeText(passage.text, mapping)
+  const words = createPuzzleWords(passage.text, encoded)
   const targetRange = getTargetRange(passage.text, target, encoded, mapping)
 
   return {
@@ -116,6 +143,7 @@ export function generatePuzzle(mapping: CipherMapping = FIXED_CIPHER_MAPPING): P
     plaintext: passage.text,
     target,
     encoded,
+    words,
     targetRange,
   }
 }
