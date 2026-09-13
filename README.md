@@ -2,6 +2,13 @@
 
   Decode Me là một puzzle game về việc giải mã một ngôn ngữ viết chưa biết. Người chơi nhìn thấy một đoạn văn được mã hóa bằng glyph, một từ mục tiêu bằng tiếng Anh, rồi dùng pattern, deduction và các thông tin thu được từ những lần thử trước để tìm đúng chuỗi glyph.
 
+  This is a web development homework project.
+  Inspired by a minigame from the Alex's Caves Minecraft mod.
+
+  ## Attribution and license
+
+  The original code in this repository is released under the MIT License. The game concept is inspired by a minigame from the Alex's Caves Minecraft mod; this project is an independent web implementation and is not affiliated with or endorsed by the mod's creators.
+
   ## Bắt đầu
 
   Yêu cầu Node.js và npm.
