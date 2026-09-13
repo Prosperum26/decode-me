@@ -20,6 +20,12 @@ export type PuzzleWord = {
   encodedEnd: number
 }
 
+export type PuzzleDifficulty = 'easy' | 'medium' | 'hard'
+
+export type GeneratePuzzleOptions = {
+  difficulty?: PuzzleDifficulty
+}
+
 const STOP_WORDS = new Set([
   'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from', 'had',
   'has', 'have', 'he', 'her', 'his', 'i', 'in', 'into', 'is', 'it', 'its',
@@ -130,7 +136,11 @@ function createPuzzleWords(text: string, encoded: string): PuzzleWord[] {
   })
 }
 
-export function generatePuzzle(mapping: CipherMapping = FIXED_CIPHER_MAPPING): Puzzle {
+export function generatePuzzle(
+  options: GeneratePuzzleOptions = {},
+  mapping: CipherMapping = FIXED_CIPHER_MAPPING,
+): Puzzle {
+  void options.difficulty
   const passage = passages[Math.floor(Math.random() * passages.length)]
   const candidates = validatePassage(passage, mapping)
   const target = candidates[Math.floor(Math.random() * candidates.length)]
@@ -138,7 +148,7 @@ export function generatePuzzle(mapping: CipherMapping = FIXED_CIPHER_MAPPING): P
   const words = createPuzzleWords(passage.text, encoded)
   const targetRange = getTargetRange(passage.text, target, encoded, mapping)
 
-  return {
+  return { 
     id: passage.id,
     plaintext: passage.text,
     target,
