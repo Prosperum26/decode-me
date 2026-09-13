@@ -1,11 +1,22 @@
+import { FloatingBackground } from '../components/layout/FloatingBackground'
+import { MagneticButton } from '../components/ui/MagneticButton'
+import { ScrambleText } from '../components/ui/ScrambleText'
+
 export function HomePage() {
+  const navigateToPlay = (href: string) => {
+    window.history.pushState({}, '', href)
+    window.dispatchEvent(new PopStateEvent('popstate'))
+  }
+
   return (
     <section className="page-section home-page">
-      <p className="eyebrow">Expedition log // Entry 01</p>
-      <h1>Decode Me</h1>
-      <p className="page-lede">Something ancient is waiting to be understood.</p>
-      <div className="placeholder-mark" aria-hidden="true">✦</div>
-      <p className="page-note">A quiet place for unknown symbols, lost tablets, and careful discovery.</p>
+      <FloatingBackground />
+      <div className="home-content">
+        <div className="home-copy">
+          <h1><ScrambleText /></h1>
+        </div>
+        <MagneticButton href="/play" onNavigate={navigateToPlay} />
+      </div>
     </section>
   )
 }
